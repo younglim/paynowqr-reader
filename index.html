@@ -31,7 +31,7 @@
       var rx = /\d{8}SG.PAYNOW(.*)(\d{8}SG\..*){0,1}/g;
       var arr = rx.exec(qr);
 
-      if (arr[1] != null) {
+      if (arr !=null && arr.length >1) {
         return arr[1];
       }
       return "";
@@ -115,8 +115,14 @@
 
         scanner.addListener('scan', function (content) {
           var pnQR = extractPayNowQR(content);
-          var pnContent = extractPNQRContent(pnQR);
-          displayPNContent(pnContent);
+          if (pnQR =="") {
+            alert("Not a PayNow QR.\n\nContent:\n"+content);
+          } else {
+            var pnContent = extractPNQRContent(pnQR);
+            displayPNContent(pnContent);
+         
+          }
+          
           scanner.stop();
           isScan = false;
         });

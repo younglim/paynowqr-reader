@@ -11,6 +11,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css"
     integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+  <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+
 
   <style>
     .l-box {
@@ -22,9 +24,7 @@
     }
   </style>
 
-  <script type="text/javascript"
-    src="https://rawcdn.githack.com/tobiasmuehl/instascan/4224451c49a701c04de7d0de5ef356dc1f701a93/bin/instascan.min.js"></script>
-
+  <script type="text/javascript" src="instascan.min.js"></script>
   <script>
 
     function extractPayNowQR(qr) {
@@ -104,7 +104,7 @@
 
     <div class="pure-u-1">
 
-      <video id="preview"></video>
+      <video id="preview" playsinline></video>
       <script type="text/javascript">
         var isScan = false;
 
@@ -132,9 +132,9 @@
                 var iOSiPadOS = /^iP/.test(navigator.platform) ||
                           /^Mac/.test(navigator.platform) && navigator.maxTouchPoints > 4;
                 if (iOSiPadOS) {
-                  scanner.start(cameras[1]);
-                } else {
                   scanner.start(cameras[0]);
+                } else {
+                  scanner.start(cameras[1]);
                 }
               } else if (cameras.length > 0) {
                 scanner.start(cameras[0]);

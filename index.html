@@ -126,7 +126,17 @@
             isScan = true;
 
             Instascan.Camera.getCameras().then(function (cameras) {
-              if (cameras.length > 0) {
+              if (cameras.length > 1) {
+
+                // Check iPhone and iPad including iPadOS 13+ regardless of desktop mode settings
+                var iOSiPadOS = /^iP/.test(navigator.platform) ||
+                          /^Mac/.test(navigator.platform) && navigator.maxTouchPoints > 4;
+                if (iOSiPadOS) {
+                  scanner.start(cameras[1]);
+                } else {
+                  scanner.start(cameras[0]);
+                }
+              } else if (cameras.length > 0) {
                 scanner.start(cameras[0]);
               } else {
                 alert('No cameras found.');
@@ -209,6 +219,8 @@
 
     // display
     function displayPNContent(pnContent) {
+      resetTable();
+
       for (const [key, value] of pnContent.entries()) {
         console.log(key, value);
         elem = document.getElementById(key);
